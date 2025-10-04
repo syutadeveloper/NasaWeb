@@ -17,6 +17,9 @@ get('/profile', 'views/profile.php');
 // Подписка
 get('/subscribe', 'views/subscribe.php');
 
+// Админ панель
+get('/admin', 'views/admin.php');
+
 // Страница 404
 any('/404', 'views/404.php');
 
@@ -41,13 +44,31 @@ get('/sign-up', 'auth/sign-up.php');
 */
 
 // Новости
-get('/api/news', 'api/news/index.php');
+get('/api/news', 'api/news/news.php');
 
 // Погода
-get('/api/weather', 'api/weather/index.php');
+get('/api/weather', 'api/weather/weather.php');
 post('/api/weather/get', 'api/weather/weather.php');
 
-// Уведомления (push)
+// Оповещения о ЧС
+get('/api/alerts', 'api/alerts/alerts.php');
+
+// Подписка на уведомления
+get('/api/subscribe', 'api/subscribe/subscribe.php');
+post('/api/subscribe', 'api/subscribe/subscribe.php');
+
+// Регистрация устройств для push
+get('/api/devices', 'api/devices/devices.php');
+post('/api/devices', 'api/devices/devices.php');
+
+// Админ API
+get('/api/admin/alerts', 'api/admin/alerts.php');
+post('/api/admin/alerts', 'api/admin/alerts.php');
+
+// Push уведомления
+post('/api/push/test', 'api/push/test.php');
+
+// Уведомления (push) - старый endpoint
 get('/api/notifications', 'api/notifications/index.php');
 
 // Переводчик

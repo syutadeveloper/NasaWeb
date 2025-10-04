@@ -7,19 +7,35 @@ services:
       - ./:/var/www/html
     depends_on:
       - db
+      - redis
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nasaveb
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
 
   db:
     image: mysql:8.0
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: devdb
-      MYSQL_USER: devuser
-      MYSQL_PASSWORD: devpass
+      MYSQL_DATABASE: nasaveb
+      MYSQL_USER: nasauser
+      MYSQL_PASSWORD: nasapass
     volumes:
       - dbdata:/var/lib/mysql
+      - ./database/db.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -33,3 +49,4 @@ services:
 
 volumes:
   dbdata:
+  redisdata:
